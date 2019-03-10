@@ -1,0 +1,73 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\begin{document}
+	\section{Uwagi:}
+	Jako oznaczenie współrzędnej w \ensuremath{n}-tym wymiarze jest użyta notacja taka jak do ciągów (\ensuremath{m_n}).\\
+	Niezależnie od wyboru wiadomości da się skonstruować \ensuremath{l} wymiarową hipersferę o takim promieniu (\ensuremath{\sqrt{\sum\limits_{i=0}^l m^2_i}}) by punkt \ensuremath{m} leżał na niej.
+	\section{Wyprowadzenie \ensuremath{t} ze wzoru:}
+	\begin{description}
+	\item m - punkt leżący na hipersferze
+	\item p - punkt przez który i przez \ensuremath{m} zostanie przeprowadzona prosta na drugi koniec hipersfery - zostanie obliczony punkt wspólny hipersfery i prostej.
+	\item k - liczba wymiarów przestrzeni, w której jest punkt \ensuremath{p}
+	\item l - indeks ostatniego wymiaru hipersfery
+	\end{description}
+	\ensuremath {
+	\\
+	\sum\limits_{i=0}^l (m_i + t(p_{i \bmod{k}} - m_i))^2 = \sum\limits_{i=0}^l m^2_i \tab /- \sum\limits_{i=0}^l m^2_i \\
+	\sum\limits_{i=0}^l (m_i + t(p_{i \bmod{k}} - m_i))^2 - \sum\limits_{i=0}^l m^2_i = 0 \\
+	\sum\limits_{i=0}^l (m^2_i + 2m_it(p_{i \bmod{k}} - m_i) + t^2(p_{i \bmod{k}} - m_i)^2) - \sum\limits_{i=0}^l m^2_i = 0 \\
+	\sum\limits_{i=0}^l (2m_it(p_{i \bmod{k}} - m_i) + t^2(p_{i \bmod{k}} - m_i)^2) = 0 \tab /: t\\
+	\sum\limits_{i=0}^l (2m_i(p_{i \bmod{k}} - m_i) + t(p_{i \bmod{k}} - m_i)^2) = 0 \tab /- \sum\limits_{i=0}^l (2m_i(p_{i \bmod{k}} - m_i) \\
+	-2\sum\limits_{i=0}^l m_i(p_{i \bmod{k}} - m_i) = t\sum\limits_{i=0}^l (p_{i \bmod{k}} - m_i)^2 \tab /: \sum\limits_{i=0}^l (p_{i \bmod{k}} - m_i)^2 \\
+	t = -2\frac{\sum\limits_{i=0}^l m_i(p_{i \bmod{k}} - m_i)}{\sum\limits_{i=0}^l (p_{i \bmod{k}} - m_i)^2}
+	}
+	\newpage
+	\section{
+	Szyfrowanie jako punkt wspólny \ensuremath{l} wymiarowej hipersfery o promieniu\ensuremath{\sqrt{\sum\limits_{i=0}^l m^2_i}} i prostej przechodzącej przez punkty \ensuremath{p} i \ensuremath{m}:
+	}
+	Punkt m w rezultacie długości promienia leży na hipersferze.
+	Dzielenie \ensuremath{e_n} przez b zostanie pominięte i wykonane będzie dopiero przy odszyfrowywaniu, kiedy wiadomo będzie, że dzielenie odwróci wynik (zwróci z powrotem wiadomość), więc będzie on na pewno całkowity.\\
+	Wejście:
+	\begin{description}
+	\item m - wiadmość
+	\item p - klucz
+	\item k - długość klucza
+	\item l - indeks ostatniego elementu wiadomości
+	\end{description}
+	Wyjście:
+	\begin{description}
+	\item e - zaszyfrowana wiadmość
+	\item b - mianownik do użycia przy odszyfrowywaniu
+	\end{description} 
+	\ensuremath {
+		a_n = p_{n \bmod{k}} - m_n \\
+		b = \sum\limits_{i=0}^l a_i^2 \\
+		c = \sum\limits_{i=0}^l m_ia_i \\
+		e_n = m_n - \frac{2a_nc}{b} = \frac{bm_n - 2a_nc}{b}
+	}
+	\newpage
+		\section{
+	Odszyfrowywanie jako przeprowadzenie prostej przez punkty \ensuremath{\frac{e_n}{b}} i \ensuremath{p} z powrotem do punktu \ensuremath{m} (na drugi koniec \ensuremath{l} wymiarowej hipersfery względem \ensuremath{\frac{e_n}{b}}), którym jest wiadmość:
+	}
+	Punkt \ensuremath{m} w rezultacie długości promienia leży na hipersferze, a \ensuremath{\frac{e_n}{b}} jest punktem wspólnym prostej i hipersfery, więc też leży na hipersferze.\\
+	Wejście:
+	\begin{description}
+	\item e - zaszyfrowana wiadmość
+	\item b - mianownik do użycia przy odszyfrowywaniu
+	\item p - klucz
+	\item k - długość klucza
+	\item l - indeks ostatniego elementu zaszyfrowanej wiadomości
+	\end{description} 
+	Wyjście:
+	\begin{description}
+	\item m - wiadmość
+	\end{description}
+	\ensuremath {
+		f_n = bp_{n \bmod{k}} - e_n \\
+		g = \sum\limits_{i=0}^l f_i^2 \\
+		h = \sum\limits_{i=0}^l e_if_i \\
+		m_n = \frac{ge_n - 2f_nh}{gb}
+	}
+\end{document}
