@@ -5,7 +5,8 @@
 \begin{document}
 	\section{Uwagi:}
 	Jako oznaczenie współrzędnej w \ensuremath{n}-tym wymiarze jest użyta notacja taka jak do ciągów (\ensuremath{m_n}).\\
-	Niezależnie od wyboru wiadomości da się skonstruować \ensuremath{l} wymiarową hipersferę o takim promieniu (\ensuremath{\sqrt{\sum\limits_{i=0}^l m^2_i}}) by punkt \ensuremath{m} leżał na niej.
+	Niezależnie od wyboru wiadomości da się skonstruować \ensuremath{l} wymiarową hipersferę o takim promieniu (\ensuremath{\sqrt{\sum\limits_{i=0}^l m^2_i}}) by punkt \ensuremath{m} leżał na niej.\\
+	Szyfrowanie zadziała jeśli \ensuremath{\exists n (p_{n\bmod{k}} \neq m_n)}.
 	\section{Wyprowadzenie \ensuremath{t} ze wzoru:}
 	\begin{description}
 	\item m - punkt leżący na hipersferze
@@ -29,6 +30,7 @@
 	}
 	Punkt m w rezultacie długości promienia leży na hipersferze.
 	Dzielenie \ensuremath{e_n} przez b zostanie pominięte i wykonane będzie dopiero przy odszyfrowywaniu, kiedy wiadomo będzie, że dzielenie odwróci wynik (zwróci z powrotem wiadomość), więc będzie on na pewno całkowity.\\
+	Przy liczeniu \ensuremath{e_n} dodawane jest do wyniku \ensuremath{p_{n\bmod{k}}\bmod{k}} chociaż nie ma tego we wzorach, żeby zamaskować wynik właściwego działania względnie niewielką liczbą na wypadek, gdy \ensuremath{a_n = 0}.\\
 	Wejście:
 	\begin{description}
 	\item m - wiadmość
@@ -45,7 +47,7 @@
 		a_n = p_{n \bmod{k}} - m_n \\
 		b = \sum\limits_{i=0}^l a_i^2 \\
 		c = 2\sum\limits_{i=0}^l m_ia_i \\
-		e_n = bm_n - a_nc
+		e_n = bm_n - a_nc + p_{n\bmod{k}}\bmod{k}
 	}
 	\newpage
 		\section{
@@ -65,10 +67,11 @@
 	\item m - wiadmość
 	\end{description}
 	\ensuremath {
-		f_n = bp_{n \bmod{k}} - e_n \\
+		q_n = e_n - p_{n\bmod{k}}\bmod{k} \\
+		f_n = bp_{n \bmod{k}} - q_n \\
 		g = \sum\limits_{i=0}^l f_i^2 \\
-		h = 2\sum\limits_{i=0}^l e_if_i \\
+		h = 2\sum\limits_{i=0}^l q_if_i \\
 		d = gb \\
-		m_n = \frac{ge_n - f_nh}{d}
+		m_n = \frac{gq_n - f_nh}{d}
 	}
 \end{document}

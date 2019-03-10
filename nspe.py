@@ -1,6 +1,5 @@
 from sys import argv
 
-
 def string_to_int_arr(str):
     return [ord(x) for x in str]
 
@@ -14,15 +13,16 @@ def encrypt(message, password):
     k = len(p)
     a = [p[i % k] - x for i, x in enumerate(m)]
     b, c = sum_of_products(a, a), sum_of_products(a, m) << 1
-    return [(b*x - a[n]*c) for n, x in enumerate(m)], b
+    return [(b*x - a[n]*c + p[n % k] % k) for n, x in enumerate(m)], b
 
 
 def decrypt(encrypted, password):
-    e, b, p = encrypted[0], encrypted[1], string_to_int_arr(password)
+    b, p = encrypted[1], string_to_int_arr(password)
     k = len(p)
+    e = [x - p[i % k] % k for i, x in enumerate(encrypted[0])]
     f = [b*p[i % k] - x for i, x in enumerate(e)]
     g, h = sum_of_products(f, f), sum_of_products(f, e) << 1
-    d = g*b 
+    d = g*b
     return ''.join(chr((g*x-f[n]*h)//d) for n, x in enumerate(e))
 
 
