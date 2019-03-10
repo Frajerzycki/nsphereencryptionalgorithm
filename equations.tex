@@ -44,8 +44,8 @@
 	\ensuremath {
 		a_n = p_{n \bmod{k}} - m_n \\
 		b = \sum\limits_{i=0}^l a_i^2 \\
-		c = \sum\limits_{i=0}^l m_ia_i \\
-		e_n = m_n - \frac{2a_nc}{b} = \frac{bm_n - 2a_nc}{b}
+		c = 2\sum\limits_{i=0}^l m_ia_i \\
+		e_n = bm_n - a_nc
 	}
 	\newpage
 		\section{
@@ -67,7 +67,8 @@
 	\ensuremath {
 		f_n = bp_{n \bmod{k}} - e_n \\
 		g = \sum\limits_{i=0}^l f_i^2 \\
-		h = \sum\limits_{i=0}^l e_if_i \\
-		m_n = \frac{ge_n - 2f_nh}{gb}
+		h = 2\sum\limits_{i=0}^l e_if_i \\
+		d = gb \\
+		m_n = \frac{ge_n - f_nh}{d}
 	}
 \end{document}
