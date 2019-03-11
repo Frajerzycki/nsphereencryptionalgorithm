@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage[T1]{fontenc}
 \newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
 
 \begin{document}
 	\section{Uwagi:}
@@ -10,9 +11,9 @@
 	\section{Wyprowadzenie \ensuremath{t} ze wzoru:}
 	\begin{description}
 	\item m - punkt leżący na hipersferze
-	\item p - punkt przez który i przez \ensuremath{m} zostanie przeprowadzona prosta na drugi koniec hipersfery - zostanie obliczony punkt wspólny hipersfery i prostej.
+	\item p - punkt przez który i przez \ensuremath{m} zostanie przeprowadzona prosta, której będą wyliczone wspólnepunkty z hipersferą.
 	\item k - liczba wymiarów przestrzeni, w której jest punkt \ensuremath{p}
-	\item l - indeks ostatniego wymiaru hipersfery
+	\item l - liczba wymiarów hipersfery
 	\end{description}
 	\ensuremath {
 	\\
@@ -25,12 +26,10 @@
 	t = -2\frac{\sum\limits_{i=0}^l m_i(p_{i \bmod{k}} - m_i)}{\sum\limits_{i=0}^l (p_{i \bmod{k}} - m_i)^2}
 	}
 	\newpage
-	\section{
-	Szyfrowanie jako punkt wspólny \ensuremath{l} wymiarowej hipersfery o promieniu\ensuremath{\sqrt{\sum\limits_{i=0}^l m^2_i}} i prostej przechodzącej przez punkty \ensuremath{p} i \ensuremath{m}:
-	}
+	\section{Szyfrowanie:}
 	Punkt m w rezultacie długości promienia leży na hipersferze.
-	Dzielenie \ensuremath{e_n} przez b zostanie pominięte i wykonane będzie dopiero przy odszyfrowywaniu, kiedy wiadomo będzie, że dzielenie odwróci wynik (zwróci z powrotem wiadomość), więc będzie on na pewno całkowity.\\
-	Przy liczeniu \ensuremath{e_n} dodawane jest do wyniku \ensuremath{p_{n\bmod{k}}\bmod{k}} chociaż nie ma tego we wzorach, żeby zamaskować wynik właściwego działania względnie niewielką liczbą na wypadek, gdy \ensuremath{a_n = 0}.\\
+	By uniknąć niecałkowitego wyniku wynikiem są dwa ciągi - reszty z dzielenia i podłogi ilorazów \\
+	Do reszt z dzielenia dodawane jest \ensuremath{p_{n\bmod{k}}\bmod{k}} na wypadek, gdy \ensuremath{a_n = 0} i by zamaskować promień hipersfery. \\
 	Wejście:
 	\begin{description}
 	\item m - wiadmość
@@ -40,23 +39,25 @@
 	\end{description}
 	Wyjście:
 	\begin{description}
-	\item e - zaszyfrowana wiadmość
+	\item r - reszty z dzielenia wyrazów \ensuremath{e} przez \ensuremath{b}
+	\item q - podłogi wyników dzielenia wyrazów \ensuremath{e} przez \ensuremath{b}
 	\item b - mianownik do użycia przy odszyfrowywaniu
 	\end{description} 
 	\ensuremath {
 		a_n = p_{n \bmod{k}} - m_n \\
 		b = \sum\limits_{i=0}^l a_i^2 \\
 		c = 2\sum\limits_{i=0}^l m_ia_i \\
-		e_n = bm_n - a_nc + p_{n\bmod{k}}\bmod{k}
+		e_n = bm_n - a_nc \\
+		r_n = e_n\bmod{b} + (p_{n\bmod{k}}\bmod{k}) \\
+		q_n = \floor{\frac{e_n}{b}}
 	}
 	\newpage
-		\section{
-	Odszyfrowywanie jako przeprowadzenie prostej przez punkty \ensuremath{\frac{e_n}{b}} i \ensuremath{p} z powrotem do punktu \ensuremath{m} (na drugi koniec \ensuremath{l} wymiarowej hipersfery względem \ensuremath{\frac{e_n}{b}}), którym jest wiadmość:
-	}
+	\section{Odszyfrowywanie:}
 	Punkt \ensuremath{m} w rezultacie długości promienia leży na hipersferze, a \ensuremath{\frac{e_n}{b}} jest punktem wspólnym prostej i hipersfery, więc też leży na hipersferze.\\
 	Wejście:
 	\begin{description}
-	\item e - zaszyfrowana wiadmość
+	\item r - reszty z dzielenia wyrazów \ensuremath{e} przez \ensuremath{b}
+	\item q - podłogi wyników dzielenia wyrazów \ensuremath{e} przez \ensuremath{b}
 	\item b - mianownik do użycia przy odszyfrowywaniu
 	\item p - klucz
 	\item k - długość klucza
@@ -67,11 +68,11 @@
 	\item m - wiadmość
 	\end{description}
 	\ensuremath {
-		q_n = e_n - p_{n\bmod{k}}\bmod{k} \\
-		f_n = bp_{n \bmod{k}} - q_n \\
+		e_n = bq_n + r_n - (p_{n\bmod{k}}\bmod{k}) \\
+		f_n = bp_{n \bmod{k}} - e_n \\
 		g = \sum\limits_{i=0}^l f_i^2 \\
-		h = 2\sum\limits_{i=0}^l q_if_i \\
+		h = 2\sum\limits_{i=0}^l e_if_i \\
 		d = gb \\
-		m_n = \frac{gq_n - f_nh}{d}
+		m_n = \frac{ge_n - f_nh}{d}
 	}
 \end{document}
