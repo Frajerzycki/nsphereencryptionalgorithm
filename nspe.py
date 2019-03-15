@@ -1,6 +1,6 @@
 from sys import argv
 from random import randint
-import re
+from re import sub
 
 
 def string_to_int_arr(str):
@@ -31,7 +31,7 @@ def decrypt(q, b, p, w):
 
 
 def parse_tuple_int_arr(str):
-    return [tuple(int(y) for y in re.sub("\\(|\\)", '', x).split(',')) for x in str.replace(' ', '')[
+    return [tuple(int(y) for y in sub("\\(|\\)", '', x).split(',')) for x in str.replace(' ', '')[
         1:-1].split('),')]
 
 
@@ -61,20 +61,23 @@ if len(argv) < 2 or (argv[1] not in ['-e', '-d', '-gp', '-gw']):
 else:
     mode = argv[1]
     if mode == '-e':
-        m = string_to_int_arr(input('Enter message:\t'))
-        p = string_to_int_arr(input('Enter first part of key:\t'))
-        w = parse_int_arr(input('Enter second part of key (as list of numbers):\t'))
+        m = string_to_int_arr(input('Enter a message:\t'))
+        p = string_to_int_arr(input('Enter the first part of key:\t'))
+        w = parse_int_arr(
+            input('Enter the second part of key (as list of numbers):\t'))
 
         if not check(m, p):
-            print("Message and firt part of password have to have at least one different letter.")
+            print(
+                "Message and firt part of password have to have at least one different letter.")
         else:
             encrypted = encrypt(m, p, w)
             print("Encrypted message:\t{}\nb = {}".format(
                 encrypted[0], encrypted[1]))
     elif mode == '-d':
-        q = parse_tuple_int_arr(input('Enter encrypted message:\t'))
-        p = string_to_int_arr(input('Enter first part of key:\t'))
-        w = parse_int_arr(input('Enter second part of key (as list of numbers):\t'))
+        q = parse_tuple_int_arr(input('Enter the encrypted message:\t'))
+        p = string_to_int_arr(input('Enter the first part of key:\t'))
+        w = parse_int_arr(
+            input('Enter the second part of key (as list of numbers):\t'))
         b = int(input('b = '))
         print("Message:\t{}".format(decrypt(q, b, p, w)))
     elif mode == '-gw':
