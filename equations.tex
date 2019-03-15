@@ -27,20 +27,19 @@
 	}
 	\newpage
 	\section{Szyfrowanie:}
-	Punkt m w rezultacie długości promienia leży na hipersferze.
-	By uniknąć niecałkowitego wyniku wynikiem są dwa ciągi - reszty z dzielenia i podłogi ilorazów \\
-	Do reszt z dzielenia dodawane jest \ensuremath{p_{n\bmod{k}}\bmod{k}} na wypadek, gdy \ensuremath{a_n = 0} i by zamaskować promień hipersfery. \\
+	Do reszt z dzielenia dodawane jest \ensuremath{w_{n\bmod{k}}} na wypadek, gdy \ensuremath{a_n = 0} i by zamaskować promień hipersfery. \\
 	Wejście:
 	\begin{description}
 	\item m - wiadmość
-	\item p - klucz
-	\item k - długość klucza
+	\item p - pierwsza część klucza
+	\item w - druga część klucza
+	\item k - długość pierwszej części klucza
+	\item d - długość drugiej części klucza
 	\item l - indeks ostatniego elementu wiadomości
 	\end{description}
 	Wyjście:
 	\begin{description}
-	\item r - reszty z dzielenia wyrazów \ensuremath{e} przez \ensuremath{b}
-	\item q - podłogi wyników dzielenia wyrazów \ensuremath{e} przez \ensuremath{b}
+	\item q - zaszyfrowana wiadomość
 	\item b - mianownik do użycia przy odszyfrowywaniu
 	\end{description} 
 	\ensuremath {
@@ -48,19 +47,19 @@
 		b = \sum\limits_{i=0}^l a_i^2 \\
 		c = 2\sum\limits_{i=0}^l m_ia_i \\
 		e_n = bm_n - a_nc \\
-		r_n = e_n\bmod{b} + (p_{n\bmod{k}}\bmod{k})  \\
-		q_n = \floor{\frac{e_n}{b}}
+		q_{n_0} = \floor{\frac{e_n}{b}}  \\
+		q_{n_1} = e_n\bmod{b} + w_{n\bmod{d}} 
 	}
 	\newpage
 	\section{Odszyfrowywanie:}
-	Punkt \ensuremath{m} w rezultacie długości promienia leży na hipersferze, a \ensuremath{\frac{e_n}{b}} jest punktem wspólnym prostej i hipersfery, więc też leży na hipersferze.\\
 	Wejście:
 	\begin{description}
-	\item r - reszty z dzielenia wyrazów \ensuremath{e} przez \ensuremath{b}
-	\item q - podłogi wyników dzielenia wyrazów \ensuremath{e} przez \ensuremath{b}
+	\item q - zaszyfrowana wiadomość
 	\item b - mianownik do użycia przy odszyfrowywaniu
-	\item p - klucz
-	\item k - długość klucza
+	\item p - pierwsza część klucza
+	\item w - druga część klucza
+	\item k - długość pierwszej części klucza
+	\item d - długość drugiej części klucza
 	\item l - indeks ostatniego elementu zaszyfrowanej wiadomości
 	\end{description} 
 	Wyjście:
@@ -68,7 +67,7 @@
 	\item m - wiadmość
 	\end{description}
 	\ensuremath {
-		e_n = bq_n + r_n - (p_{n\bmod{k}}\bmod{k}) \\
+		e_n = bq_{n_0} + q_{n_1} - w_{n\bmod{d}} \\
 		f_n = bp_{n \bmod{k}} - e_n \\
 		g = \sum\limits_{i=0}^l f_i^2 \\
 		h = 2\sum\limits_{i=0}^l e_if_i \\
