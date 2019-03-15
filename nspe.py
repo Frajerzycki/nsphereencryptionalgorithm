@@ -61,22 +61,22 @@ if len(argv) < 2 or (argv[1] not in ['-e', '-d', '-gp', '-gw']):
 else:
     mode = argv[1]
     if mode == '-e':
-        m = string_to_int_arr(input('Podaj wiadomość do zaszyfrowania:\t'))
-        p = string_to_int_arr(input('Podaj pierwszą część hasła:\t'))
-        w = parse_int_arr(input('Podaj drugą część hasła:\t'))
+        m = string_to_int_arr(input('Enter message:\t'))
+        p = string_to_int_arr(input('Enter first part of key:\t'))
+        w = parse_int_arr(input('Enter second part of key (as list of numbers):\t'))
 
         if not check(m, p):
-            print("Hasło i wiadomość muszą mieć przynajmniej jedną różną literę.")
+            print("Message and firt part of password have to have at least one different letter.")
         else:
             encrypted = encrypt(m, p, w)
-            print("Zaszyfrowana wiadmość:\t{}\nb = {}".format(
+            print("Encrypted message:\t{}\nb = {}".format(
                 encrypted[0], encrypted[1]))
     elif mode == '-d':
-        q = parse_tuple_int_arr(input('Podaj zaszyfrowaną do wiadomość:\t'))
-        p = string_to_int_arr(input('Podaj pierwszą część hasła:\t'))
-        w = parse_int_arr(input('Podaj drugą część hasła:\t'))
+        q = parse_tuple_int_arr(input('Enter encrypted message:\t'))
+        p = string_to_int_arr(input('Enter first part of key:\t'))
+        w = parse_int_arr(input('Enter second part of key (as list of numbers):\t'))
         b = int(input('b = '))
-        print("Wiadomość:\t{}".format(decrypt(q, b, p, w)))
+        print("Message:\t{}".format(decrypt(q, b, p, w)))
     elif mode == '-gw':
         print(generate_w(int(argv[2])))
     elif mode == '-gp':
