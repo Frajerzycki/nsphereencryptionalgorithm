@@ -31,7 +31,7 @@ def decrypt(q, b, p, w):
 
 
 def parse_tuple_int_arr(str):
-    return [tuple(int(y) for y in re.sub("\(|\)", '', x).split(',')) for x in str.replace(' ', '')[
+    return [tuple(int(y) for y in re.sub("\\(|\\)", '', x).split(',')) for x in str.replace(' ', '')[
         1:-1].split('),')]
 
 
