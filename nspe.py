@@ -1,6 +1,6 @@
 from sys import argv
-from random import randint
 from re import sub
+from secrets import randbits
 
 
 def string_to_int_arr(str):
@@ -41,11 +41,12 @@ def parse_int_arr(str):
 
 
 def generate_w(length):
-    return [randint(-1024, 1025) for _ in range(0, length)]
+    def f(x):
+        if x == 1:
+            return 1
+        return -1
+    return [f(randbits(1)) * randbits(10) for _ in range(0, length)]
 
-
-def generate_p(length):
-    return ''.join(chr(randint(33, 126)) for _ in range(0, length))
 
 
 def check(m, p):
@@ -56,15 +57,14 @@ def check(m, p):
     return False
 
 
-if len(argv) < 2 or (argv[1] not in ['-e', '-d', '-gp', '-gw']):
-    print('python3 nspe.py [-e|-d|-gw|-gp] [length (if -g)] \n-e encrypt\n-d decrypt\n-gp generating first part of password\n-gw generating second part of password')
+if len(argv) < 2 or (argv[1] not in ['-e', '-d', '-gp']):
+    print('python3 nspe.py [-e|-d|-gp] [length (if -gp)] \n-e - encrypt\n-d - decrypt\n-gp - generates one part of password')
 else:
     mode = argv[1]
     if mode == '-e':
         m = string_to_int_arr(input('Enter a message:\t'))
-        p = string_to_int_arr(input('Enter the first part of key:\t'))
-        w = parse_int_arr(
-            input('Enter the second part of key (as list of numbers):\t'))
+        p = parse_int_arr(input('Enter the first part of key (as list of numbers):\t'))
+        w = parse_int_arr(input('Enter the second part of key (as list of numbers):\t'))
 
         if not check(m, p):
             print(
@@ -75,12 +75,9 @@ else:
                 encrypted[0], encrypted[1]))
     elif mode == '-d':
         q = parse_tuple_int_arr(input('Enter the encrypted message:\t'))
-        p = string_to_int_arr(input('Enter the first part of key:\t'))
-        w = parse_int_arr(
-            input('Enter the second part of key (as list of numbers):\t'))
+        p = parse_int_arr(input('Enter the first part of key (as list of numbers):\t'))
+        w = parse_int_arr(input('Enter the second part of key (as list of numbers):\t'))
         b = int(input('b = '))
         print("Message:\t{}".format(decrypt(q, b, p, w)))
-    elif mode == '-gw':
-        print(generate_w(int(argv[2])))
     elif mode == '-gp':
-        print(generate_p(int(argv[2])))
+        print(generate_w(int(argv[2])))
