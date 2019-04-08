@@ -54,9 +54,8 @@ namespace NSphereCryptography
         {
             var m = StringToIntArray(message);
             var a = new int[m.Length];
-            var e = new BigInteger[m.Length];
             var encryptedLast = m.Length << 1;
-            var encrypted = new BigInteger[encryptedLast + 1];
+            BigInteger[] e = new BigInteger[m.Length], encrypted = new BigInteger[encryptedLast + 1];
             for (int i = 0; i < m.Length; i++)
                 a[i] = key1[i % key1.Length] - m[i];
             var b = SumOfProducts(a, a);

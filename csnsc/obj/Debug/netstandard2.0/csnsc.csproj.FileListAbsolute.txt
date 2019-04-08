@@ -1,9 +1,0 @@
-/home/ikcilrep/nspherealgorithm/csnsc/bin/Debug/netstandard2.0/csnsc.deps.json
-/home/ikcilrep/nspherealgorithm/csnsc/bin/Debug/netstandard2.0/csnsc.dll
-/home/ikcilrep/nspherealgorithm/csnsc/bin/Debug/netstandard2.0/csnsc.pdb
-/home/ikcilrep/nspherealgorithm/csnsc/obj/Debug/netstandard2.0/csnsc.csprojAssemblyReference.cache
-/home/ikcilrep/nspherealgorithm/csnsc/obj/Debug/netstandard2.0/csnsc.csproj.CoreCompileInputs.cache
-/home/ikcilrep/nspherealgorithm/csnsc/obj/Debug/netstandard2.0/csnsc.AssemblyInfoInputs.cache
-/home/ikcilrep/nspherealgorithm/csnsc/obj/Debug/netstandard2.0/csnsc.AssemblyInfo.cs
-/home/ikcilrep/nspherealgorithm/csnsc/obj/Debug/netstandard2.0/csnsc.dll
-/home/ikcilrep/nspherealgorithm/csnsc/obj/Debug/netstandard2.0/csnsc.pdb
