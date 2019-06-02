@@ -1,0 +1,14 @@
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/bin/Debug/netcoreapp2.1/csnsctest.deps.json
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/bin/Debug/netcoreapp2.1/csnsctest.runtimeconfig.json
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/bin/Debug/netcoreapp2.1/csnsctest.runtimeconfig.dev.json
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/bin/Debug/netcoreapp2.1/csnsctest.dll
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/bin/Debug/netcoreapp2.1/csnsctest.pdb
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/bin/Debug/netcoreapp2.1/csnsc.dll
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/bin/Debug/netcoreapp2.1/csnsc.pdb
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/obj/Debug/netcoreapp2.1/csnsctest.csprojAssemblyReference.cache
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/obj/Debug/netcoreapp2.1/csnsctest.csproj.CoreCompileInputs.cache
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/obj/Debug/netcoreapp2.1/csnsctest.AssemblyInfoInputs.cache
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/obj/Debug/netcoreapp2.1/csnsctest.AssemblyInfo.cs
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/obj/Debug/netcoreapp2.1/csnsctest.csproj.CopyComplete
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/obj/Debug/netcoreapp2.1/csnsctest.dll
+/home/ikcilrep/Projekty/nspherealgorithm/csnsctest/obj/Debug/netcoreapp2.1/csnsctest.pdb

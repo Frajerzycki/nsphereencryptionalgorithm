@@ -1,6 +1,7 @@
 using System;
 using System.Security.Cryptography;
 using System.Numerics;
+using System.Linq;
 namespace NSphereCryptography
 {
     public static class Nsc
@@ -52,16 +53,16 @@ namespace NSphereCryptography
         }
         public static BigInteger[] Encrypt(String message, int[] key1, int[] key2)
         {
-            var m = StringToIntArray(message);
-            var a = new int[m.Length];
-            var encryptedLast = m.Length << 1;
+            int[] m = StringToIntArray(message);
+            int encryptedLast = m.Length << 1;
             BigInteger[] e = new BigInteger[m.Length], encrypted = new BigInteger[encryptedLast + 1];
+            BigInteger b = 0;
+            for (int i = 0; i < message.Length; i++)
+                b += key1[i % key1.Length] * key1[i % key1.Length];
+            
+            BigInteger c = SumOfProducts(m, key1) << 1;
             for (int i = 0; i < m.Length; i++)
-                a[i] = key1[i % key1.Length] - m[i];
-            var b = SumOfProducts(a, a);
-            var c = SumOfProducts(m, a) << 1;
-            for (int i = 0; i < m.Length; i++)
-                e[i] = b * m[i] - a[i] * c;
+                e[i] = b * m[i] - key1[i % key1.Length] * c;
             for (int i = 1, j = 0; i < encryptedLast; i += 2, j++)
             {
                 encrypted[i - 1] = e[j] / b;
@@ -70,21 +71,21 @@ namespace NSphereCryptography
             encrypted[encryptedLast] = b;
             return encrypted;
         }
-        public static String Decrypt(BigInteger[] encrypted, int[] key1, int[] key2)
+        public static string Decrypt(BigInteger[] encrypted, int[] key1, int[] key2)
         {
-            var messageLength = encrypted.Length >> 1;
-            var encryptedLast = encrypted.Length - 1;
+            int messageLength = encrypted.Length >> 1;
+            int encryptedLast = encrypted.Length - 1;
             var e = new BigInteger[messageLength];
             var f = new BigInteger[messageLength];
             var m = new char[messageLength];
-            var b = encrypted[encryptedLast];
+            BigInteger b = encrypted[encryptedLast];
             for (int i = 1, j = 0; i < encryptedLast; i += 2, j++)
                 e[j] = b * encrypted[i - 1] + encrypted[i] - key2[j % key2.Length];
             for (int i = 0; i < messageLength; i++)
-                f[i] = b * key1[i % key1.Length] - e[i];
-            var g = SumOfProducts(f, f);
-            var h = SumOfProducts(f, e) << 1;
-            var d = g * b;
+                f[i] = b * key1[i % key1.Length];
+            BigInteger g = SumOfProducts(f, f);
+            BigInteger h = SumOfProducts(f, e) << 1;
+            BigInteger d = g * b;
             for (int i = 0; i < messageLength; i++)
                 m[i] = (char)((g * e[i] - f[i] * h) / d);
 

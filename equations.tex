@@ -11,19 +11,17 @@
 	\section{Wyprowadzenie \ensuremath{t} ze wzoru:}
 	\begin{description}
 	\item m - punkt leżący na hipersferze
-	\item p - punkt przez który i przez \ensuremath{m} zostanie przeprowadzona prosta, której będą wyliczone wspólnepunkty z hipersferą.
+	\item p - wektor kierunkowy prostej przechodzącej przez punkt \ensuremath{m}
 	\item k - liczba wymiarów przestrzeni, w której jest punkt \ensuremath{p}
-	\item l - liczba wymiarów hipersfery
+	\item l - liczba wymiarów hipersfery leżącej w l+1 wymiarowej przestrzeni
 	\end{description}
 	\ensuremath {
 	\\
-	\sum\limits_{i=0}^l (m_i + t(p_{i \bmod{k}} - m_i))^2 = \sum\limits_{i=0}^l m^2_i \tab /- \sum\limits_{i=0}^l m^2_i \\
-	\sum\limits_{i=0}^l (m_i + t(p_{i \bmod{k}} - m_i))^2 - \sum\limits_{i=0}^l m^2_i = 0 \\
-	\sum\limits_{i=0}^l (m^2_i + 2m_it(p_{i \bmod{k}} - m_i) + t^2(p_{i \bmod{k}} - m_i)^2) - \sum\limits_{i=0}^l m^2_i = 0 \\
-	\sum\limits_{i=0}^l (2m_it(p_{i \bmod{k}} - m_i) + t^2(p_{i \bmod{k}} - m_i)^2) = 0 \tab /: t\\
-	\sum\limits_{i=0}^l (2m_i(p_{i \bmod{k}} - m_i) + t(p_{i \bmod{k}} - m_i)^2) = 0 \tab /- \sum\limits_{i=0}^l (2m_i(p_{i \bmod{k}} - m_i) \\
-	-2\sum\limits_{i=0}^l m_i(p_{i \bmod{k}} - m_i) = t\sum\limits_{i=0}^l (p_{i \bmod{k}} - m_i)^2 \tab /: \sum\limits_{i=0}^l (p_{i \bmod{k}} - m_i)^2 \\
-	t = -2\frac{\sum\limits_{i=0}^l m_i(p_{i \bmod{k}} - m_i)}{\sum\limits_{i=0}^l (p_{i \bmod{k}} - m_i)^2}
+	\sum\limits_{i=0}^l (m_i + tp_{i \bmod{k}})^2 = \sum\limits_{i=0}^l m^2_i \tab /- \sum\limits_{i=0}^l m^2_i \\
+	\sum\limits_{i=0}^l (2m_itp_{i \bmod{k}} + t^2p_{i \bmod{k}} ^2) = 0 \tab /: t\\
+	\sum\limits_{i=0}^l (2m_ip_{i \bmod{k}} + tp_{i \bmod{k}}^2) = 0 \tab /- \sum\limits_{i=0}^l 2m_ip_{i \bmod{k}} \\
+	-2\sum\limits_{i=0}^l m_ip_{i \bmod{k}} = t\sum\limits_{i=0}^l p_{i \bmod{k}}^2 \tab /: \sum\limits_{i=0}^l p_{i \bmod{k}}^2 \\
+	t = -2\frac{\sum\limits_{i=0}^l m_ip_{i \bmod{k}}}{\sum\limits_{i=0}^l p_{i \bmod{k}}^2}
 	}
 	\newpage
 	\section{Szyfrowanie:}
@@ -43,12 +41,11 @@
 	\item b - mianownik do użycia przy odszyfrowywaniu
 	\end{description} 
 	\ensuremath {
-		a_n = p_{n \bmod{k}} - m_n \\
-		b = \sum\limits_{i=0}^l a_i^2 \\
-		c = 2\sum\limits_{i=0}^l m_ia_i \\
-		e_n = bm_n - a_nc \\
+		b = \sum\limits_{i=0}^l p_{i \bmod{k}}^2 \\
+		c = 2\sum\limits_{i=0}^l m_ip_{i \bmod{k}} \\
+		e_n = bm_n - cp_{n \bmod{k}} \\
 		q_{n_0} = \floor{\frac{e_n}{b}}  \\
-		q_{n_1} = e_n  - q_{n_0}b + w_{n\bmod{d}} 
+		q_{n_1} = e_n  - bq_{n_0} + w_{n\bmod{d}} 
 	}
 	\newpage
 	\section{Odszyfrowywanie:}
@@ -68,10 +65,10 @@
 	\end{description}
 	\ensuremath {
 		e_n = bq_{n_0} + q_{n_1} - w_{n\bmod{d}} \\
-		f_n = bp_{n \bmod{k}} - e_n \\
+		f_n = bp_{n \bmod{k}} \\
 		g = \sum\limits_{i=0}^l f_i^2 \\
 		h = 2\sum\limits_{i=0}^l e_if_i \\
-		d = gb \\
-		m_n = \frac{ge_n - f_nh}{d}
+		o = gb \\
+		m_n = \frac{ge_n - f_nh}{o}
 	}
 \end{document}

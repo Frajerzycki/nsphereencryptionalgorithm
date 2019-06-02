@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.1",
+    "signature": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.1": {
+      "csnsctest/1.0.0": {
+        "dependencies": {
+          "csnsc": "1.0.0"
+        },
+        "runtime": {
+          "csnsctest.dll": {}
+        }
+      },
+      "csnsc/1.0.0": {
+        "runtime": {
+          "csnsc.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "csnsctest/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "csnsc/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

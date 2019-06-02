@@ -2,14 +2,10 @@
 #include <string>
 #include <random>
 #include <iostream>
-#define CLL const long long
-#define CI const int
-#define CM const mpz_class
-#define CC const char
 
 using namespace std;
 
-CI *generate_key(CI length, CI min_inclusive, CI max_inclusive)
+const int *generate_key(const int length, const int min_inclusive, const int max_inclusive)
 {
     int *result = new int[length];
     random_device generator;
@@ -19,7 +15,7 @@ CI *generate_key(CI length, CI min_inclusive, CI max_inclusive)
     return result;
 }
 
-CM sum_of_products(CLL array1[], CI array2[], CI length)
+const mpz_class sum_of_products(const long long array1[], const int array2[], const int length)
 {
     mpz_class sum = 0;
     for (int i = 0; i < length; i++)
@@ -27,15 +23,15 @@ CM sum_of_products(CLL array1[], CI array2[], CI length)
     return sum;
 }
 
-CM sum_of_products(CC array1[], CI array2[], CI length)
+const mpz_class sum_of_products(const char array1[], const int array2[], const int array1_length, const int array2_length)
 {
     mpz_class sum = 0;
-    for (int i = 0; i < length; i++)
-        sum += mpz_class(array1[i]) * mpz_class(array2[i]);    
+    for (int i = 0; i < array1_length; i++)
+        sum += mpz_class(array1[i]) * mpz_class(array2[i % array2_length]);    
     return sum;
 }
 
-CM sum_of_products(CI array1[], CI array2[], CI length)
+const mpz_class sum_of_products(const int array1[], const int array2[], const int length)
 {
     mpz_class sum = 0;
     for (int i = 0; i < length; i++)
@@ -43,7 +39,7 @@ CM sum_of_products(CI array1[], CI array2[], CI length)
     return sum;
 }
 
-CM sum_of_products(CM array1[], CM array2[], CI length)
+const mpz_class sum_of_products(const mpz_class array1[], const mpz_class array2[], const int length)
 {
     mpz_class sum = 0;
     for (int i = 0; i < length; i++)
@@ -51,19 +47,20 @@ CM sum_of_products(CM array1[], CM array2[], CI length)
     return sum;
 }
 
-CM *encrypt(CC message[], CI key1[], CI key2[], CI message_length, CI key1_length, CI key2_length)
+const mpz_class *encrypt(const char message[], const int key1[], const int key2[], const int message_length, const int key1_length, const int key2_length)
 {
-    CI encrypted_last = message_length << 1;
-    auto a = new int[message_length];
-    auto e = new mpz_class[message_length];
-    auto encrypted = new mpz_class[encrypted_last + 1];
-
+    const int encrypted_last = message_length << 1;
+    mpz_class* e = new mpz_class[message_length];
+    mpz_class* encrypted = new mpz_class[encrypted_last + 1];
+    mpz_class b = 0, c = 0;
+    for (int i = 0; i < message_length;i++) {
+        const mpz_class value = key1[i % key1_length];
+        b += value * value;
+        c += message[i] * value;
+    }
+    c <<= 1;
     for (int i = 0; i < message_length; i++)
-        a[i] = key1[i % key1_length] - message[i];
-    
-    CM b = sum_of_products(a, a, message_length),c = sum_of_products(message, a, message_length) << 1;
-    for (int i = 0; i < message_length; i++)
-        e[i] = b * message[i] - c * a[i];
+        e[i] = b * message[i] - c * key1[i % key1_length];
     for (int i = 1, j = 0; i < encrypted_last; i += 2, j++)
     {
         encrypted[i - 1] = e[j] / b;
@@ -73,27 +70,27 @@ CM *encrypt(CC message[], CI key1[], CI key2[], CI message_length, CI key1_lengt
     return encrypted;
 }
 
-CM *encrypt(const string &message, CI key1[], CI key2[], CI key1_length, CI key2_length)
+const mpz_class *encrypt(const string &message, const int key1[], const int key2[], const int key1_length, const int key2_length)
 {
     return encrypt(message.c_str(), key1, key2, message.length(), key1_length, key2_length);
 }
-CC *decrypt(CM *encrypted, CI key1[], CI key2[], CI encrypted_length, CI key1_length, CI key2_length)
+const char *decrypt(const mpz_class *encrypted, const int key1[], const int key2[], const int encrypted_length, const int key1_length, const int key2_length)
 {
-    CI message_length = encrypted_length >> 1;
-    CI encrypted_last = encrypted_length - 1;
-    CM b = encrypted[encrypted_last];
-    auto e = new mpz_class[message_length];
-    auto f = new mpz_class[message_length];
-    auto m = new char[message_length];
+    const int message_length = encrypted_length >> 1;
+    const int encrypted_last = encrypted_length - 1;
+    const mpz_class b = encrypted[encrypted_last];
+    mpz_class* e = new mpz_class[message_length];
+    mpz_class* f = new mpz_class[message_length];
+    char* m = new char[message_length];
 
     for (int i = 1, j = 0; i < encrypted_last; i += 2, j++)
         e[j] = b * encrypted[i - 1] + encrypted[i] - key2[j % key2_length];    
     for (int i = 0; i < message_length; i++)
-        f[i] = b*key1[i % key1_length] - e[i];
+        f[i] = b*key1[i % key1_length];
     
-    CM g = sum_of_products(f,f, message_length), h = sum_of_products(f,e, message_length) << 1, d = g*b;
+    const mpz_class g = sum_of_products(f,f, message_length), h = sum_of_products(f,e, message_length) << 1, o = g*b;
     for (int i = 0; i < message_length; i++) {
-        mpz_class result = (g*e[i] - h*f[i])/d;
+        mpz_class result = (g*e[i] - h*f[i])/o;
         m[i] = result.get_si();
     }
     return m;                                 
