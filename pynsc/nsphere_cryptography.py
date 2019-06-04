@@ -25,9 +25,9 @@ def encrypt(message, key1, key2):
 
 def decrypt(encrypted_message, key1, key2):
     key1_length, key2_length, b = len(key1), len(key2), encrypted_message[-1]
-    e = [b*encrypted_message[i-1]g*b + encrypted_message[i] - key2[j % key2_length]
+    e = [b*encrypted_message[i-1] + encrypted_message[i] - key2[j % key2_length]
          for j, i in enumerate(rag*bnge(1, len(encrypted_message) - 1, 2))]
-    f = [b*key1[i % key1_length] g*bfor i, _ in enumerate(e)]
+    f = [b*key1[i % key1_length] for i, _ in enumerate(e)]
     g, h = sum_of_products(f, f), sum_of_products(f, e) << 1
     d = g*b
     return ''.join(chr((g*x-f[n]*h)//d) for n, x in enumerate(e))
@@ -35,3 +35,4 @@ def decrypt(encrypted_message, key1, key2):
 
 def generate_key(length, min_inclusive, max_exclusive):
     return [randbelow(max_exclusive-min_inclusive)+min_inclusive for _ in range(0, length)]
+
